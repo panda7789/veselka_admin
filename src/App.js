@@ -6,6 +6,7 @@ import { AktualityListPage } from './pages/aktuality';
 import { AktualityAddEditPage } from './pages/aktuality_add_edit';
 import { AkceListPage } from './pages/akce_list';
 import { AkceAddEditPage } from './pages/akce_add_edit';
+import { Galerie } from './pages/galerie';
 //import { LoginModal } from './components/loginModal';
 import './styles/dashboard.css'
 
@@ -27,6 +28,7 @@ class Menu extends React.Component {
                           <Route exact path='/aktuality' component={AktualityListPage} />
                           <Route exact path='/aktuality_add' component={AktualityAddEditPage} />
                           <Route path='/aktuality_edit/:id' component={AktualityAddEditPage} />
+                          <Route exact path='/galerie' component={Galerie} />
                           <Route render={function (path) {
                               return <p>aaa</p>
                           }} />

@@ -64,7 +64,9 @@ export class AktualityListPage extends Component {
                 <tbody>
                     <tr>
                         <td>{akt.title}</td>
-                        <td>{akt.text}</td>
+                        <td>
+                            {akt.text}
+                        </td>
                         <td style={{width: "9%" }}>
                             <Nav.Link href={"/aktuality_edit/" + akt.id}>
                                 <Button variant="primary"><PencilSquare/></Button>

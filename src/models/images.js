@@ -19,3 +19,15 @@ export const processImages = async images => {
         throw Error("Image processing went wrong!");
     }
 }
+
+export const getImages = (offset=null, limit=null, callback) => {
+    var params = "";
+    params += offset > 0 ? "?offset=" + offset + "&": "?";
+    params += limit > 0 ? "limit=" + limit : "";
+    fetch(api_url + '/api/images' + params)
+        .then(res => res.json())
+        .then((data) => {
+            callback(data);
+        })
+        .catch(console.log)
+}
