@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { Trash } from 'react-bootstrap-icons';
-import { getImages } from '../models/images';
+import { getImages, updateImage } from '../models/images';
 
 export class Galerie extends Component {
     constructor(props) {
@@ -13,9 +12,9 @@ export class Galerie extends Component {
             limit: 20
         };
     
-        this.removeImage = this.removeImage.bind(this);
         this.loadNext = this.loadNext.bind(this);
         this.loadImages = this.loadImages.bind(this);
+        this.changeImageShowInGallery = this.changeImageShowInGallery.bind(this);
     }
     componentDidMount(){
         this.loadImages();
@@ -26,16 +25,19 @@ export class Galerie extends Component {
         });
     }
 
-    removeImage(filteringvalue) {
-        var index = this.state.images.findIndex(x => x === filteringvalue);
-        this.setState({
-            images: this.state.images.filter((_, i) => i !== index),
-        });
-    }
-
     loadNext(){
         this.setState({ offset: this.state.offset + this.state.limit });
         this.loadImages();
+    }
+
+    changeImageShowInGallery(filteringvalue) {
+        this.setState(prevState => ({
+            images: prevState.images.map(
+                (el, index) => index === filteringvalue? { ...el, showInGallery: !el.showInGallery }: el
+              )
+        }), () => {
+            updateImage(this.state.images[filteringvalue]);
+        })
     }
 
     render() {
@@ -43,12 +45,17 @@ export class Galerie extends Component {
             <>
             <h1>Foto-galerie</h1>
             {
-                this.state.images.map(imageURI => 
+                this.state.images.map((imageURI, index) => 
                     (
                         <Card bg='Primary' style={{ display: 'inline-block', width: '18rem' }}>
                             <Card.Body>
                                 <Card.ImgOverlay>
-                                    <Card.Link onClick={(e) => this.removeImage(imageURI._id)} style={{float: 'right', fontSize: '25px'}}><Trash /></Card.Link>
+                                    <input 
+                                        type="checkbox"
+                                        id="custom-switch"
+                                        checked={imageURI.showInGallery}
+                                        onChange={(e) => this.changeImageShowInGallery(index)}
+                                    />
                                 </Card.ImgOverlay>
                                 <Card.Img variant="bottom" src={imageURI.urlThumbnail} />
                             </Card.Body>
