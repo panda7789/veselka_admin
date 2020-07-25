@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { getImages, updateImage } from '../models/images';
+import { getImages, updateImage, deleteImage } from '../models/images';
+import { Trash } from 'react-bootstrap-icons';
 
 export class Galerie extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export class Galerie extends Component {
         this.loadNext = this.loadNext.bind(this);
         this.loadImages = this.loadImages.bind(this);
         this.changeImageShowInGallery = this.changeImageShowInGallery.bind(this);
+        this.removeImage = this.removeImage.bind(this);
     }
     componentDidMount(){
         this.loadImages();
@@ -28,6 +30,14 @@ export class Galerie extends Component {
     loadNext(){
         this.setState({ offset: this.state.offset + this.state.limit });
         this.loadImages();
+    }
+
+    removeImage(filteringvalue) {
+        var index = this.state.images.findIndex(x => x === filteringvalue);
+        deleteImage(this.state.images[index]);
+        this.setState({
+            images: this.state.images.filter((_, i) => i !== index),
+        });
     }
 
     changeImageShowInGallery(filteringvalue) {
@@ -56,6 +66,7 @@ export class Galerie extends Component {
                                         checked={imageURI.showInGallery}
                                         onChange={(e) => this.changeImageShowInGallery(index)}
                                     />
+                                    <Card.Link onClick={(e) => this.removeImage(imageURI)} style={{float: 'right', fontSize: '25px'}}><Trash /></Card.Link>
                                 </Card.ImgOverlay>
                                 <Card.Img variant="bottom" src={imageURI.urlThumbnail} />
                             </Card.Body>

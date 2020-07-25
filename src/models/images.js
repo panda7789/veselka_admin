@@ -47,3 +47,19 @@ export const updateImage = async img => {
         throw Error("Image processing went wrong!");
     }
 }
+
+export const deleteImage = async img => {
+    try {
+        var imagesData = await fetch(api_url + '/api/images/' + img.id, {
+            method: 'DELETE',
+            body: JSON.stringify(img),
+        });
+        if (imagesData.statusCode < 200 || imagesData.statusCode > 299) {
+            throw Error("Response for /api/images is wrong.");
+        }
+        return imagesData.json();
+    } catch (error) {
+        console.log(error);
+        throw Error("Image processing went wrong!");
+    }
+}
