@@ -13,7 +13,11 @@ export const processImages = async images => {
         if (imagesData.statusCode < 200 || imagesData.statusCode > 299) {
             throw Error("Response for /api/images is wrong.");
         }
-        return imagesData.json();
+        imagesData = await imagesData.json();
+        if (!Array.isArray(imagesData)){
+            imagesData = [imagesData];
+        }
+        return imagesData.map(x => x._id);
     } catch (error) {
         console.log(error);
         throw Error("Image processing went wrong!");
