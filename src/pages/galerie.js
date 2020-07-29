@@ -19,7 +19,7 @@ export class Galerie extends Component {
         this.removeImage = this.removeImage.bind(this);
     }
     componentDidMount(){
-        this.loadImages();
+        this.loadNext();
     }
     loadImages(){
         getImages(this.state.offset, this.state.limit, res => {
