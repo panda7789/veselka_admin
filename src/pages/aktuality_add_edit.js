@@ -39,10 +39,10 @@ export class AktualityAddEditPage extends Component {
         this.setState({[event.target.name]: value});
     }
     fileSelectedHandler = (e) => {
-        this.generateImagePreviews(e.target.files);
+        this.generateImagePreviews(e.target.files, this.state.imagesPreviews);
         this.setState({ images: [...this.state.images, ...e.target.files] });
     }
-    generateImagePreviews(input) {
+    generateImagePreviews(input, previousImages) {
         const files = Array.from(input);
         Promise.all(files.map(file => {
             return (new Promise((resolve,reject) => {
@@ -55,7 +55,8 @@ export class AktualityAddEditPage extends Component {
             }));
         }))
         .then(images => {
-            this.setState({ imagesPreviews : images })
+            var withPreviousImages = images.concat(previousImages);
+            this.setState({ imagesPreviews : withPreviousImages })
 
         }, error => {        
             console.error(error);
@@ -76,7 +77,7 @@ export class AktualityAddEditPage extends Component {
             images: this.state.images
         }
         var images = this.state.images;
-
+        console.log(images);
         if (this.props.match.params.id){
             updateAktuality(this.props.match.params.id, obj, images, (res) => {
                 this.setState({

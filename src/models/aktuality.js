@@ -47,7 +47,20 @@ export const createAktuality = async (data, images, callback) => {
 export const updateAktuality = async (id, data, images, callback) => {
     try {
         if (images.length > 0){
-            data.images = await processImages(images);
+            // tady ještě oddělit ty nove a ty stare(ty neni nutno nahravat)
+            var onlyNewImages = new Array();
+            var oldImages = new Array();
+            images.forEach((image, index) => {
+                if (!image.id){
+                    onlyNewImages.push(image);
+                }
+                else {
+                    oldImages.push(image);
+                }
+            });
+            console.log(images[0]);
+            var onlyNewImagesIDs = await processImages(onlyNewImages);
+            data.images = oldImages.map(x => x.id).concat(onlyNewImagesIDs);
         }
         var aktualityResult = await fetch(api_url + '/api/aktuality/' + id, {
             method: 'PUT',
