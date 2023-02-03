@@ -3,9 +3,11 @@ var api_url = process.env.REACT_APP_API_URL;
 export const processImages = async (images, fake=false) => {
     try {
         const imageData = new FormData();
-        images.forEach((img, index) => {
-            imageData.append(`images[${index}]`, img);
-        });
+        if (!fake) {
+            images.forEach((img, index) => {
+                imageData.append(`images[${index}]`, img);
+            });
+        }
         const url = !fake ? '/api/images' : '/api/images/fake';
         var imagesData = await fetch(api_url + url, {
             method: 'POST',
