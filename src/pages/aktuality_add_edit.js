@@ -14,6 +14,7 @@ export class AktualityAddEditPage extends Component {
             imagesPreviews: [],
             showAlertOk: false,
             showAlertFail: false,
+            imagesFake: ''
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -128,6 +129,10 @@ export class AktualityAddEditPage extends Component {
                 <Form.Group controlId="c">
                     <Form.Label>Obrázky</Form.Label>
                     <Form.Control name="images" type="file" multiple onChange={this.fileSelectedHandler} />
+                </Form.Group>
+                <Form.Group controlId="d">
+                    <Form.Label>Obrázky-fake</Form.Label>
+                    <Form.Control name="images-fake" type="text" value={this.state.imagesFake} onChange={this.handleChange} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     {this.props.match && this.props.match.params.id ? "Upravit" : "Přidat"}

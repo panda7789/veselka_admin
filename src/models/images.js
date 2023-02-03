@@ -1,14 +1,18 @@
 var api_url = process.env.REACT_APP_API_URL;
 
-export const processImages = async images => {
+export const processImages = async (images, fake=false) => {
     try {
         const imageData = new FormData();
         images.forEach((img, index) => {
             imageData.append(`images[${index}]`, img);
         });
-        var imagesData = await fetch(api_url + '/api/images', {
+        const url = !fake ? '/api/images' : '/api/images/fake';
+        var imagesData = await fetch(api_url + url, {
             method: 'POST',
-            body: imageData,
+            body: !fake ? imageData : JSON.stringify(imageData),
+            headers: !fake ? {} : {
+                'Content-Type': 'application/json'
+            }
         });
         if (imagesData.statusCode < 200 || imagesData.statusCode > 299) {
             throw Error("Response for /api/images is wrong.");

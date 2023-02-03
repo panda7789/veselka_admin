@@ -20,14 +20,17 @@ export const getOneAktuality = (id, callback) => {
         .catch(console.log)
 }
 
-export const createAktuality = async (data, images, callback) => {
+export const createAktuality = async (data, images, imagesFake, callback) => {
     try {
         if (images.length > 0){
             data.images = await processImages(images);
         }
+        else if (imagesFake != '') {
+            data.images = await processImages(imagesFake, true);
+        }
         var aktualityResult = await fetch(api_url + '/api/aktuality', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify({ urls: data }),
             headers: {
                 'Content-Type': 'application/json'
             }
