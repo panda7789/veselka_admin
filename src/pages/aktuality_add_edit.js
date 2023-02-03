@@ -132,7 +132,7 @@ export class AktualityAddEditPage extends Component {
                 </Form.Group>
                 <Form.Group controlId="d">
                     <Form.Label>Obrázky-fake</Form.Label>
-                    <Form.Control name="images-fake" type="text" value={this.state.imagesFake} onChange={this.handleChange} />
+                    <Form.Control name="imagesFake" type="text" value={this.state.imagesFake} onChange={this.handleChange} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     {this.props.match && this.props.match.params.id ? "Upravit" : "Přidat"}
