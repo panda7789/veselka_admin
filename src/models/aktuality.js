@@ -26,11 +26,11 @@ export const createAktuality = async (data, images, imagesFake, callback) => {
             data.images = await processImages(images);
         }
         else if (imagesFake != '') {
-            data.images = await processImages(imagesFake, true);
+            data.images = await processImages({ urls: imagesFake }, true);
         }
         var aktualityResult = await fetch(api_url + '/api/aktuality', {
             method: 'POST',
-            body: JSON.stringify({ urls: data }),
+            body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
             }
