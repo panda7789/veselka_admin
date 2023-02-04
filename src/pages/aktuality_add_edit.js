@@ -75,9 +75,11 @@ export class AktualityAddEditPage extends Component {
         var obj = {
             title: this.state.title,
             text: this.state.text,
-            images: this.state.images
+            images: this.state.images,
+            imagesFake: this.state.imagesFake
         }
         var images = this.state.images;
+        var imagesFake = this.state.imagesFake;
         console.log(images);
         if (this.props.match.params.id){
             updateAktuality(this.props.match.params.id, obj, images, (res) => {
@@ -93,7 +95,7 @@ export class AktualityAddEditPage extends Component {
             });
         }
         else{
-            createAktuality(obj, images, (res) => {
+            createAktuality(obj, images, imagesFake, (res) => {
                 this.setState({
                     showAlertOk: res,
                     showAlertFail: !res,
