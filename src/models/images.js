@@ -11,7 +11,7 @@ export const processImages = async (images, fake=false) => {
         const url = !fake ? '/api/images' : '/api/images/fake';
         var imagesData = await fetch(api_url + url, {
             method: 'POST',
-            body: !fake ? imageData : JSON.stringify(imageData),
+            body: !fake ? imageData : JSON.stringify(images),
             headers: !fake ? {} : {
                 'Content-Type': 'application/json'
             }
